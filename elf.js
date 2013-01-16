@@ -1,4 +1,7 @@
+/*global define */
+
 (function(root, undefined) {
+  'use strict';
 
   /* --- Setup --- */
 
@@ -64,7 +67,7 @@
     };
   };
 
-  var generatePairsRecursive = function(list, i, blacklist, used) {
+  var generateRecursive = function(list, i, blacklist, used) {
     var actor,
         candidates,
         result;
@@ -79,7 +82,7 @@
           result[actor] = candidate;
           return result;
         } else {
-          result = generatePairsRecursive(list, i + 1, blacklist, used.concat(candidate));
+          result = generateRecursive(list, i + 1, blacklist, used.concat(candidate));
           if (result.length !== 0) {
             var pair = {};
             pair[actor] = candidate;
@@ -91,7 +94,7 @@
     return [];
   };
 
-  var generateAllPairsRecursive = function(list, i, blacklist, used) {
+  var generateAllRecursive = function(list, i, blacklist, used) {
     var actor,
         candidates,
         pairs;
@@ -106,7 +109,7 @@
       } else {
         for (var j = 0; j < candidates.length; j++) {
          var candidate = candidates[j];
-         var candidatePairs = generateAllPairsRecursive(list, i + 1, blacklist, used.concat(candidate));
+         var candidatePairs = generateAllRecursive(list, i + 1, blacklist, used.concat(candidate));
          pairs = pairs.concat(candidatePairs.map(mappingFunction(actor, candidate)));
         }
       }
@@ -115,14 +118,14 @@
   };
 
   /* --- API methods --- */
-  lib.generatePairs = function(list, blacklist) {
-    return generatePairsRecursive(list, 0, blacklist || [], []);
+  lib.generate = function(list, blacklist) {
+    return generateRecursive(list, 0, blacklist || [], []);
   };
 
 
 
-  lib.generateAllPairs = function(list, blacklist) {
-    return generateAllPairsRecursive(list, 0, blacklist || [], []);
+  lib.generateAll = function(list, blacklist) {
+    return generateAllRecursive(list, 0, blacklist || [], []);
   };
 
   /* --- Module Definition --- */
@@ -154,7 +157,7 @@
     })(root.elf);
 
     // Declare `elf` on the root (global/window) object:
-    root['elf'] = lib;
+    root.elf = lib;
   }
 
   // Root will be `window` in browser or `global` on the server:
