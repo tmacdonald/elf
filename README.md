@@ -1,0 +1,1 @@
+**elf.js** is a JavaScript library for generating Secret Santa-type lists. It is intended to be used as a nodeJS/npm, AMD/requireJS module, or tradtional browser-based library.
