@@ -32,7 +32,7 @@
         candidates.push(potential);
       }
     }
-    return candidates;
+    return candidates.sort(function(a,b) { return Math.random() < 0.5; });
   };
 
   var merge = function(obj1, obj2) {
